@@ -48,8 +48,12 @@ namespace ModellenBureau.Areas.Identity.Pages.Account
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Full name")]
-            public string Name { get; set; }
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [DataType(DataType.Text)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
 
             [DataType(DataType.Text)]
             public string Address { get; set; }
@@ -87,10 +91,11 @@ namespace ModellenBureau.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new AppUser {
-                    Name = Input.Name,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
                     Address = Input.Address,
                     City = Input.City,
-                    UserName = Input.Name, 
+                    UserName = Input.Email, 
                     Email = Input.Email 
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);

@@ -35,8 +35,10 @@ namespace ModellenBureau.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Full name")]
-            public string Name { get; set; }
+            public string FirstName { get; set; }
+
+            [DataType(DataType.Text)]
+            public string LastName { get; set; }
 
             [DataType(DataType.Text)]
             public string Address { get; set; }
@@ -58,7 +60,8 @@ namespace ModellenBureau.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Name = user.Name,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Address = user.Address,
                 City = user.City,
                 PhoneNumber = phoneNumber
@@ -102,9 +105,13 @@ namespace ModellenBureau.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            if (Input.Name != user.Name)
+            if (Input.FirstName != user.FirstName)
             {
-                user.Name = Input.Name;
+                user.FirstName = Input.FirstName;
+            }
+            if (Input.LastName != user.LastName)
+            {
+                user.LastName = Input.LastName;
             }
             if (Input.City != user.City)
             {

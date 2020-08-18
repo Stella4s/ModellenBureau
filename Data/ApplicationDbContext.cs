@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ModellenBureau.Models;
 
 namespace ModellenBureau.Data
 {
@@ -13,5 +14,6 @@ namespace ModellenBureau.Data
             : base(options)
         {
         }
+        public DbSet<PhotoModel> PhotoModel { get; set; }
     }
 }
