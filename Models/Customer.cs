@@ -1,6 +1,7 @@
 ﻿using ModellenBureau.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,5 +20,7 @@ namespace ModellenBureau.Models
         public string BTWNummer { get; set; }
 
         public AppUser User { get; set; }
+        [ForeignKey("User")]
+        public string AppUserId { get; set; }
     }
 }

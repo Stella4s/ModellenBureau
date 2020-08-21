@@ -9,16 +9,34 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <!--<a asp-page="Create">Create New</a>-->
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.City)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Age)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].EyeColour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].HairColour)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Status)
@@ -30,10 +48,28 @@
 @foreach (var item in Model.PhotoModel) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName + " " + item.User.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.City)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Age)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EyeColour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HairColour)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)

@@ -1,0 +1,14 @@
+﻿Notes
+
+
+MODEL
+- Add image collection to model.
+- Add supporting image class.
+- Add sizes to Model.
+
+CUSTOMER
+- Add logo
+
+GENERAL
+- Try partial views in combination with registering user.
+To load both UserRegistering pages as well as the model pages for both Customer and Photomodel respectively.
