@@ -51,7 +51,7 @@ namespace ModellenBureau.Pages.PhotoModels
             }
 
             Context.PhotoModel.Add(PhotoModel);
-            PhotoModel.User = await UserManager.GetUserAsync(User);
+            PhotoModel.User = await UserManager.FindByIdAsync(PhotoModel.AppUserId);
             await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

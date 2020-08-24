@@ -117,8 +117,7 @@ namespace ModellenBureau.Areas.Identity.Pages.Account
 
                     #region PhotoModel Post
                     _context.PhotoModel.Add(PhotoModel);
-                    PhotoModel.User = user;
-                    user.PhotoModel = PhotoModel;
+                    PhotoModel.User = await _userManager.FindByIdAsync(user.Id);
                     await _context.SaveChangesAsync();
                     #endregion
 

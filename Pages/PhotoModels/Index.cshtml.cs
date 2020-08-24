@@ -28,6 +28,7 @@ namespace ModellenBureau.Pages.PhotoModels
         {
             var photomodels = from c in Context.PhotoModel
                            select c;
+            
 
             var isAuthorized = User.IsInRole(ConRoles.ManagerRole) ||
                                User.IsInRole(ConRoles.AdministratorRole);
