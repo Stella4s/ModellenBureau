@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ModellenBureau.Authorization;
 using ModellenBureau.Data;
 using ModellenBureau.Models;
 
 namespace ModellenBureau.Pages.PhotoModels
 {
-    public class CreateModel : PageModel
+    public class CreateModel : DI_BasePageModel
     {
-        private readonly ModellenBureau.Data.ApplicationDbContext _context;
-
-        public CreateModel(ModellenBureau.Data.ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context, 
+            IAuthorizationService authorizationService,
+            UserManager<AppUser> userManager)
+        : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         public IActionResult OnGet()
@@ -36,8 +39,20 @@ namespace ModellenBureau.Pages.PhotoModels
                 return Page();
             }
 
-            _context.PhotoModel.Add(PhotoModel);
-            await _context.SaveChangesAsync();
+            PhotoModel.AppUserId = UserManager.GetUserId(User);
+
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                User, PhotoModel,
+                                                AuthorizeOperations.Create);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
+            Context.PhotoModel.Add(PhotoModel);
+            PhotoModel.User = await UserManager.GetUserAsync(User);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

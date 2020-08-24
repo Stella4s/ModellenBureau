@@ -108,8 +108,7 @@ namespace ModellenBureau.Areas.Identity.Pages.Account
                     Address = Input.Address,
                     City = Input.City,
                     UserName = Input.Email, 
-                    Email = Input.Email ,
-                    FullName = Input.FirstName + " " + Input.LastName
+                    Email = Input.Email
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authorization;
+using ModellenBureau.Authorization;
 
 namespace ModellenBureau
 {
@@ -42,6 +43,13 @@ namespace ModellenBureau
                 .RequireAuthenticatedUser()
                 .Build();
             });
+
+            // Authorization handlers.
+            services.AddScoped<IAuthorizationHandler,
+                                  PMIsOwnerAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler,
+                                  PMAdministratorAuthorizationHandler>();
 
             services.Configure<IdentityOptions>(options =>
             {

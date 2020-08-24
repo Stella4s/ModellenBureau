@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,14 @@ namespace ModellenBureau
 
                 try
                 {
-                    _ = SeedData.Initialize(services);
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    context.Database.Migrate();
+
+                    // requires using Microsoft.Extensions.Configuration;
+                    //var config = host.Services.GetRequiredService<IConfiguration>();
+                    var testUserPw = "Passw0rd!";
+
+                    SeedData.Initialize(services, testUserPw).Wait();
                 }
                 catch (Exception ex)
                 {
