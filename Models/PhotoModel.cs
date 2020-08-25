@@ -1,6 +1,7 @@
 ﻿using ModellenBureau.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace ModellenBureau.Models
 
         public AppUser User { get; set; }
         public string AppUserId { get; set; }
+
+        public Collection<ImgOnDatabaseModel> Photos { get; set; }
     }
 
     public enum ContactStatus

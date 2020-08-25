@@ -15,3 +15,6 @@ To load both UserRegistering pages as well as the model pages for both Customer 
 
 [Fixed] - Solve Photomodel.User properties not displaying in CRUD pages.
 
+- Adding image models for both uploading to Database as well as uploading to filesystem.
+Note: Currently only using imagemodel for Database on Customer and PhotoModel Models.
+

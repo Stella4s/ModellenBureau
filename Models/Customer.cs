@@ -22,5 +22,7 @@ namespace ModellenBureau.Models
         public AppUser User { get; set; }
         [ForeignKey("User")]
         public string AppUserId { get; set; }
+
+        public ImgOnDatabaseModel Logo { get; set; }
     }
 }
