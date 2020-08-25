@@ -26,7 +26,7 @@ namespace ModellenBureau.Pages.PhotoModels
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            PhotoModel = await Context.PhotoModel.FirstOrDefaultAsync(m => m.Id == id);
+            PhotoModel = await Context.PhotoModel.Include("User").FirstOrDefaultAsync(m => m.Id == id);
 
             if (PhotoModel == null)
             {

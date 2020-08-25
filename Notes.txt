@@ -10,5 +10,8 @@ CUSTOMER
 - Add logo
 
 GENERAL
-- Try partial views in combination with registering user.
+[Solved differently] - Try partial views in combination with registering user.
 To load both UserRegistering pages as well as the model pages for both Customer and Photomodel respectively.
+
+[Fixed] - Solve Photomodel.User properties not displaying in CRUD pages.
+

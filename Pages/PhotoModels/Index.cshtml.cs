@@ -26,7 +26,7 @@ namespace ModellenBureau.Pages.PhotoModels
 
         public async Task OnGetAsync()
         {
-            var photomodels = from c in Context.PhotoModel
+            var photomodels = from c in Context.PhotoModel.Include("User")
                            select c;
             
 
