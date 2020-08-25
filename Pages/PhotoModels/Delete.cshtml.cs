@@ -2,56 +2,69 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using ModellenBureau.Authorization;
 using ModellenBureau.Data;
 using ModellenBureau.Models;
 
 namespace ModellenBureau.Pages.PhotoModels
 {
-    public class DeleteModel : PageModel
+    public class DeleteModel : DI_BasePageModel
     {
-        private readonly ModellenBureau.Data.ApplicationDbContext _context;
-
-        public DeleteModel(ModellenBureau.Data.ApplicationDbContext context)
+        public DeleteModel(ApplicationDbContext context,
+        IAuthorizationService authorizationService,
+        UserManager<AppUser> userManager)
+        : base(context, authorizationService, userManager)
         {
-            _context = context;
         }
 
         [BindProperty]
         public PhotoModel PhotoModel { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            PhotoModel = await _context.PhotoModel.FirstOrDefaultAsync(m => m.Id == id);
+            PhotoModel = await Context.PhotoModel.FirstOrDefaultAsync(m => m.Id == id);
 
             if (PhotoModel == null)
             {
                 return NotFound();
             }
+
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                 User, PhotoModel,
+                                                 AuthorizeOperations.Delete);
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (id == null)
+            PhotoModel = await Context.PhotoModel.AsNoTracking()
+            .FirstOrDefaultAsync(m => m.Id== id);
+
+            if (PhotoModel == null)
             {
                 return NotFound();
             }
 
-            PhotoModel = await _context.PhotoModel.FindAsync(id);
-
-            if (PhotoModel != null)
+            var isAuthorized = await AuthorizationService.AuthorizeAsync(
+                                                 User, PhotoModel,
+                                                 AuthorizeOperations.Delete);
+            if (!isAuthorized.Succeeded)
             {
-                _context.PhotoModel.Remove(PhotoModel);
-                await _context.SaveChangesAsync();
+                return Forbid();
             }
+
+            Context.PhotoModel.Remove(PhotoModel);
+            await Context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }

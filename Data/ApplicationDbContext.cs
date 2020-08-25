@@ -15,5 +15,9 @@ namespace ModellenBureau.Data
         {
         }
         public DbSet<PhotoModel> PhotoModel { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+
     }
+
+
 }

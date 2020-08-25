@@ -10,15 +10,34 @@
 
 <p>
     <a asp-page="Create">Create New</a>
+    <text> The create function is only for testing these pages and should be hidden for "actual" users. </text>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].User.City)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Age)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Height)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].EyeColour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoModel[0].HairColour)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PhotoModel[0].Status)
@@ -27,23 +46,56 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.PhotoModel) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.PhotoModel)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Height)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EyeColour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HairColour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if ((await AuthorizationService.AuthorizeAsync(
+                       User, item,
+                       AuthorizeOperations.Update)).Succeeded)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <text> | </text>
+                    }
+
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+
+                    @if ((await AuthorizationService.AuthorizeAsync(
+                       User, item,
+                       AuthorizeOperations.Delete)).Succeeded)
+                    {
+                        <text> | </text>
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,0 +1,14 @@
+﻿@page
+@model ModellenBureau.Areas.Identity.Pages.Account.RegisterSelectionModel
+@{
+    ViewData["Title"] = "RegisterSelection";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="text-center">
+    <h3 class="text-center">Select if you are a PhotoModel or a Customer</h3>
+    <p> <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterPhoto">PhotoModel</a></p>
+    <p> <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterCustomer">Customer</a></p>
+</div>
+

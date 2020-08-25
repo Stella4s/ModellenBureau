@@ -3,3 +3,7 @@
 @using ModellenBureau.Data
 @namespace ModellenBureau.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using ModellenBureau.Authorization;
+@using Microsoft.AspNetCore.Authorization
+@using ModellenBureau.Models
+@inject IAuthorizationService AuthorizationService

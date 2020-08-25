@@ -12,6 +12,8 @@ using ModellenBureau.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using ModellenBureau.Authorization;
 
 namespace ModellenBureau
 {
@@ -31,8 +33,23 @@ namespace ModellenBureau
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
+            });
+
+            // Authorization handlers.
+            services.AddScoped<IAuthorizationHandler,
+                                  PMIsOwnerAuthorizationHandler>();
+
+            services.AddSingleton<IAuthorizationHandler,
+                                  PMAdministratorAuthorizationHandler>();
 
             services.Configure<IdentityOptions>(options =>
             {
