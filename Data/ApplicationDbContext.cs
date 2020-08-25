@@ -16,6 +16,9 @@ namespace ModellenBureau.Data
         }
         public DbSet<PhotoModel> PhotoModel { get; set; }
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<ImgOnDatabaseModel> ImagesOnDatabase {get; set;}
+        public DbSet<ImgOnFileSystemModel> ImagesOnFileSystem { get; set; }
+
 
     }
 
